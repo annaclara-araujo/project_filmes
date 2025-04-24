@@ -2,7 +2,7 @@
 import './App.css';
 /*import Login from './pages/login/Login.jsx'*/
 import CadastroFilme from './pages/cadastroFilme/CadastroFilme.jsx';
-//responsavel para criacao de telas
+//responsavel para criacao/visualizacao de telas
 function App() {
   return (
     <>

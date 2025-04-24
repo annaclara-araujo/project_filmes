@@ -29,6 +29,8 @@ const Login = () =>  {
         </main>
     )
 }
+
+/* linha usada para conseguir exportar a constante */
 export default Login;
 
 
