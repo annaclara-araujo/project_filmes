@@ -1,14 +1,15 @@
 
+import  Routes from './Routes/routes';
 import './App.css';
 /*import Login from './pages/login/Login.jsx'*/
-import CadastroFilme from './pages/cadastroFilme/CadastroFilme.jsx';
-//responsavel para criacao/visualizacao de telas
+
 function App() {
   return (
     <>
    {/*chamar as paginas */} 
    {/*<Login/>*/}
-    <CadastroFilme/>
+   {/* <CadastroFilme/> */}+
+    <Routes/>
     </>
   );
 }
