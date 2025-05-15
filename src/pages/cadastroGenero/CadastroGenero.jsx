@@ -9,17 +9,34 @@ import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import Cadastro from "../../components/cadastro/Cadastro";
 import Lista from "../../components/lista/Lista";
-
+import Paginacao from "../../components/paginação/Paginação"
 
 const CadastroGenero = () => {
 
     const [genero, setGenero] = useState("");
     const [listaGenero, setListaGenero] = useState([]);
-    const [excluirGenero, setExcluirGenro] = useState();
+    const [deletarrGenero, setDeletarGenro] = useState([]);
 
 
 
     function alerta(icone, mensagem) {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
+                });
+            }
+        });
         //----------ALERTAAAAA SUCESSO--------------------------------------------
         const Toast = Swal.mixin({
             toast: true,
@@ -82,11 +99,34 @@ const CadastroGenero = () => {
         }
     }
 
-    async function ExcluirGenero(params) {
-        
+    async function deletarGenero(generoId) {
+        try {
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await api.delete(`genero/${generoId.idGenero}`);
+                    Swal.fire({
+                        title: "Deletado!",
+                        text: "Genero deletado com sucesso!",
+                        icon: "success"
+                    });
+                }
+            });
+            listaGenero();
+
+        } catch (error) {
+            console.log(error);
+        }
+
     }
-
-
 
 
 
@@ -100,7 +140,7 @@ const CadastroGenero = () => {
     //assim que a pagina redenrizar, o metodo listarGenero() sera chamado
     useEffect(() => {
         listarGenero();
-    }, []);
+    }, [listarGenero]);
 
 
     return (
@@ -123,8 +163,12 @@ const CadastroGenero = () => {
                     tituloLista="Lista de Gêneros"
                     visible="none"
                     //atribuir para lista, o meu estado atual
-                    lista = {listaGenero}
+                    lista={listaGenero}
+
+                    funcExcluir={deletarGenero}
                 />
+
+                <Paginacao/>
             </main>
             <Footer />
         </>
