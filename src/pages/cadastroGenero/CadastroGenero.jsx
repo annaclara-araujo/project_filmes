@@ -19,11 +19,11 @@ const CadastroGenero = () => {
     //Quem eu vou manipular
     const [genero, setGenero] = useState("");
     const [listaGenero, setListaGenero] = useState([]);
-    
 
 
 
-    function alertar (icone, mensagem) {
+
+    function alertar(icone, mensagem) {
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -114,7 +114,7 @@ const CadastroGenero = () => {
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
                 confirmButtonText: "Sim, delete isso!"
-            }).then(async (result) => { 
+            }).then(async (result) => {
                 if (result.isConfirmed) {
                     await api.delete(`genero/${generoId.idGenero}`);
                     Swal.fire({
@@ -132,6 +132,34 @@ const CadastroGenero = () => {
 
     }
 
+    async function editarGenero(genero) {
+       console.log(genero);
+       
+        const { value: novoGenero } = await Swal.fire({
+            title: "Edite seu gênero",
+            input: "text",
+            inputLabel: "Novo gênero",
+            inputValue: genero.nome,
+            showCancelButton: true,
+            inputValidator: (value) => {
+                if (!value) {
+                    return "O campo precisa estar preenchido!";
+                }
+            }
+        });
+        if (novoGenero) {
+            try{
+                console.log(genero.nome);
+                console.log(novoGenero);
+                api.put(`genero/${genero.idGenero}`,
+                {nome: novoGenero});
+                Swal.fire(`O genero modificado ${novoGenero}`);
+            }catch(error){
+                console.log(error);
+                
+            }
+        }
+    }
 
 
 
@@ -143,11 +171,11 @@ const CadastroGenero = () => {
 
     //assim que a pagina redenrizar, o metodo listarGenero() sera chamado
     //arrow function - funcão anonimas
-    
+
     //useEffect- é um Hoocks, analisa a situação e aplica o efeito a partir de uma alteração de estado
-    
+
     //1* chama-se a função: o efeito que queremos que aconteça
-    
+
     //2* chama-se po array de dependencia: o efeito acontece na primeira vez que a tela é montada
     /// ou quando for recarregada, com dependencia 
     useEffect(() => {
@@ -178,9 +206,11 @@ const CadastroGenero = () => {
                     lista={listaGenero}
 
                     funcExcluir={deletarGenero}
+                    funcEditar={editarGenero}
+
                 />
 
-                <Paginacao/>
+                <Paginacao />
             </main>
             <Footer />
         </>

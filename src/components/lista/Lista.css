@@ -70,6 +70,13 @@
     cursor: pointer;
 }
 
+.bnt-editar{
+     border: none;
+    width: 30px;
+    background-color: white;
+    cursor: pointer;
+}
+
 
 @media screen and (max-width: 768px){
     /* 1px - 768px*/
