@@ -63,6 +63,14 @@
     border-bottom: solid 1px #73061b20;
 }
 
+.btn-excluir{
+    border: none;
+    width: 30px;
+    background-color: white;
+    cursor: pointer;
+}
+
+
 @media screen and (max-width: 768px){
     /* 1px - 768px*/
 .tabela thead{

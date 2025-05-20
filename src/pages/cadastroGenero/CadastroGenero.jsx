@@ -13,13 +13,17 @@ import Paginacao from "../../components/paginação/Paginação"
 
 const CadastroGenero = () => {
 
+
+    //So criamos useState quando precisamos guardar uma informação que muda 
+    // e que o React precisa acompanhar
+    //Quem eu vou manipular
     const [genero, setGenero] = useState("");
     const [listaGenero, setListaGenero] = useState([]);
-    const [deletarrGenero, setDeletarGenro] = useState([]);
+    
 
 
 
-    function alerta(icone, mensagem) {
+    function alertar (icone, mensagem) {
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -37,7 +41,7 @@ const CadastroGenero = () => {
                 });
             }
         });
-        //----------ALERTAAAAA SUCESSO--------------------------------------------
+        //----------alertarAAAA SUCESSO--------------------------------------------
         const Toast = Swal.mixin({
             toast: true,
             position: "top-end",
@@ -54,7 +58,7 @@ const CadastroGenero = () => {
             title: mensagem
         });
 
-        //----------FIM DO ALERTAAAA SUCESSO--------------------------------------
+        //----------FIM DO alertarAAA SUCESSO--------------------------------------
 
     }
 
@@ -67,15 +71,15 @@ const CadastroGenero = () => {
             try {
                 //cadastrar um genero: post
                 await api.post("genero", { nome: genero });
-                alerta("sucess", "Cadastro realizado com sucesso!")
+                alertar("success", "Cadastro realizado com sucesso!")
                 setGenero("");
-
+                listarGenero();
             } catch (error) {
-                alerta("error", "Erro! Entre em contato com o suporte!")
+                alertar("error", "Erro! Entre em contato com o suporte!")
                 console.log(error);
             }
         } else {
-            alerta("error", "Preencha o campo!")
+            alertar("error", "Preencha o campo!")
         }
 
         //try => tentar(o esperado)
@@ -103,14 +107,14 @@ const CadastroGenero = () => {
         try {
 
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                title: "Você tem certeza?",
+                text: "Você não poderá reverter isso!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!"
-            }).then(async (result) => {
+                confirmButtonText: "Sim, delete isso!"
+            }).then(async (result) => { 
                 if (result.isConfirmed) {
                     await api.delete(`genero/${generoId.idGenero}`);
                     Swal.fire({
@@ -138,9 +142,17 @@ const CadastroGenero = () => {
     //fim do teste
 
     //assim que a pagina redenrizar, o metodo listarGenero() sera chamado
+    //arrow function - funcão anonimas
+    
+    //useEffect- é um Hoocks, analisa a situação e aplica o efeito a partir de uma alteração de estado
+    
+    //1* chama-se a função: o efeito que queremos que aconteça
+    
+    //2* chama-se po array de dependencia: o efeito acontece na primeira vez que a tela é montada
+    /// ou quando for recarregada, com dependencia 
     useEffect(() => {
-        listarGenero();
-    }, [listarGenero]);
+        listarGenero();//função
+    }, [listarGenero]);//[dependecia]
 
 
     return (
